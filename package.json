@@ -2,7 +2,7 @@
   "name": "fuel-manager",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://miropakanec.github.io/fuel-manager",
+  "homepage": "http://miropakanec.github.io/fuel-manager",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -16,7 +16,7 @@
     "gh-pages": "^2.0.1",
     "moment": "^2.23.0",
     "plotly": "^1.0.6",
-    "plotly.js": "^1.43.1",
+    "plotly.js": "^1.44.1",
     "vee-validate": "^2.1.4",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
@@ -27,7 +27,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-eslint": "^3.2.0",
-    "@vue/cli-service": "^3.2.0",
+    "@vue/cli-service": "^3.4.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0-0",
