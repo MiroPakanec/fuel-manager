@@ -1,0 +1,1 @@
+.slide-toggle-enter-active,.slide-toggle-leave-active{-webkit-transition:max-height .8s;transition:max-height .8s;overflow:hidden}.slide-toggle-enter-active{max-height:300px}.slide-toggle-enter,.slide-toggle-leave-active{max-height:0}.slide-toggle-leave{max-height:300px}
