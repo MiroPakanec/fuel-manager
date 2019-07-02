@@ -9,59 +9,6 @@ export default class LineGraph {
     return d instanceof Date && !isNaN(d);
   }
 
-  get_consumption_trace(from, to) {
-    if (this.is_date_valid(from) === false || this.is_date_valid(to) === false)
-      return undefined;
-
-    let liters = [];
-    let km = [];
-
-    let earlier = this._data.filter(element => new Date(element.date) < from);
-    let latestFul = earlier === [] ? undefined : earlier[0];
-
-    for (var element of this._data) {
-      let current = new Date(element.date);
-
-      if (current <= to && current >= from) {
-        liters.push(element.amount);
-        km.push(element.km);
-        continue;
-      }
-
-      if (latestFul === undefined) continue;
-
-      if (
-        current < from &&
-        current > new Date(latestFul.date) &&
-        current.full
-      ) {
-        latestFul = element;
-      }
-    }
-
-    if (latestFul !== undefined) {
-      km.push(latestFul.km);
-
-      for (var element of this._data) {
-        let current = new Date(element.date);
-
-        if (current > new Date(latestFul.date) && current < from) {
-          liters.push(element.amount);
-        }
-      }
-    }
-
-    km.sort();
-    liters.sort();
-
-    let kms = km[km.length - 1] - km[0];
-    let literSum = liters.reduce(
-      (literSum, x) => parseFloat(literSum) + parseFloat(x)
-    );
-
-    return ((literSum / kms) * 100).toFixed(3);
-  }
-
   get_graph_trace(from, to, fullYear, yType) {
     let data = this.compute_liter_data_year(from, to, fullYear, yType);
 

@@ -202,6 +202,7 @@
           <v-layout>
             <v-flex xs12>
               <v-date-picker
+                id="datepicker-from"
                 no-title
                 :value="dateFrom"
                 v-model="dateFrom"
@@ -215,7 +216,7 @@
           </v-layout>
         </v-flex>
         <v-flex xs12 hidden-md-and-up>
-          <hr style="margin-top:50px">
+          <hr style="margin-top:50px" />
         </v-flex>
         <v-flex offset-xs1 offset-md0 xs10 md5>
           <v-layout>
@@ -252,6 +253,7 @@
           <v-layout>
             <v-flex xs12>
               <v-date-picker
+                id="datepicker-to"
                 no-title
                 style="border:1px solid #1a237e"
                 v-model="dateTo"
@@ -269,12 +271,13 @@
       <span v-if="consumtpion !== undefined" class="consumption-lbl">
         Spotreba:
         <b>{{consumtpion}}</b>
+        <span style="font-size: 20px; margin-left: 10px;">L / 100 km</span>
       </span>
       <span v-else class="consumption-lbl">...</span>
     </v-layout>
     <v-layout v-else>
       <v-flex xs12>
-        <vue-plotly :data="lineGraphData" :layout="lineGraphLayout" :options="options"/>
+        <vue-plotly :data="lineGraphData" :layout="lineGraphLayout" :options="options" />
       </v-flex>
     </v-layout>
   </div>
@@ -284,6 +287,7 @@
 import VuePlotly from "@statnett/vue-plotly";
 import { mapGetters, mapActions } from "vuex";
 import LineGraph from "./../analysis/lineGraph";
+import ConsumptionController from "./../analysis/consumptionController";
 import { version } from "moment";
 
 export default {
@@ -441,7 +445,8 @@ export default {
       return val => this.allowedToDates.includes(val);
     },
     consumtpion() {
-      return this.lineGraphController.get_consumption_trace(
+      var controller = new ConsumptionController(this.refuels);
+      return controller.get_consumption(
         new Date(this.dateFrom),
         new Date(this.dateTo)
       );
@@ -501,7 +506,28 @@ export default {
   border-bottom: 1px solid #1a237e;
 }
 
-td > button:enabled {
+#datepicker-to
+  > div
+  > div
+  > div.v-date-picker-table.v-date-picker-table--date.theme--light
+  > table
+  > tbody
+  > tr
+  > td
+  > button:enabled {
+  border: 1px solid #1a237e !important;
+  background-color: #1a22808a !important;
+}
+
+#datepicker-from
+  > div
+  > div
+  > div.v-date-picker-table.v-date-picker-table--date.theme--light
+  > table
+  > tbody
+  > tr
+  > td
+  > button:enabled {
   border: 1px solid #1a237e !important;
   background-color: #1a22808a !important;
 }
@@ -514,3 +540,4 @@ td > button:enabled {
   color: #ec407a;
 }
 </style>
+

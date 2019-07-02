@@ -1,3 +1,6 @@
 module.exports = {
-  publicPath: "/fuel-manager/"
+  publicPath: "/fuel-manager/",
+  configureWebpack: {
+    devtool: "source-map"
+  }
 };

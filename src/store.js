@@ -11,7 +11,7 @@ export default new Vuex.Store({
     pas: "mps"
   },
   mutations: {
-    SET_REFUELS: (state, payload) => {
+    set_refuels: (state, payload) => {
       if (payload === null) {
         state.refuels = [];
         return;
@@ -25,7 +25,20 @@ export default new Vuex.Store({
         }
       });
     },
-    REMOVE_REFUEL: (state, payload) => {
+    set_single_refuel: (state, payload) => {
+      let refuels = [];
+      for (let index = 0; index < state.refuels.length; index++) {
+        const element = state.refuels[index];
+        if (element.id === payload.id) {
+          console.log("adding this deepshit.");
+          refuels.push(payload);
+        } else {
+          refuels.push(element);
+        }
+      }
+      state.refuels = refuels;
+    },
+    remove_refuel: (state, payload) => {
       state.refuels = state.refuels.filter(function(obj) {
         return obj.id !== payload;
       });
@@ -34,18 +47,37 @@ export default new Vuex.Store({
   actions: {
     fetchRefuels: context => {
       db.ref("refuels").on("value", snapshot => {
-        context.commit("SET_REFUELS", snapshot.val());
+        context.commit("set_refuels", snapshot.val());
       });
     },
     submitRefuel: (state, payload) => {
       db.ref("refuels").push(payload);
+    },
+    updateRefuel: (context, payload) => {
+      db.ref("refuels")
+        .child(payload.id)
+        .update(payload)
+        .then(() => {
+          /*let refuels = [];
+          for (let i = 0; i < state.refuels.length; i++) {
+            const element = state.refuels[i];
+            if (element.id === payload.id) {
+              console.log("adding this deepshit.");
+              refuels.push(payload);
+            } else {
+              refuels.push(element);
+            }
+          }
+          state.refuels = refuels;*/
+          context.commit("set_single_refuel", payload);
+        });
     },
     removeRefuel: (context, payload) => {
       db.ref("refuels")
         .child(payload)
         .remove()
         .then(() => {
-          context.commit("REMOVE_REFUEL", payload);
+          context.commit("remove_refuel", payload);
         });
     }
   },

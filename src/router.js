@@ -1,40 +1,47 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from "vue";
+import Router from "vue-router";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      name: 'overview',
+      path: "/",
+      name: "overview",
       component: () => import("./views/Overview.vue")
     },
     {
-      path: '/overview',
-      name: 'overview',
+      path: "/overview",
+      name: "overview",
 
       component: () => import("./views/Overview.vue")
     },
     {
-      path: '/new',
-      name: 'new',
+      path: "/new",
+      name: "new",
 
-      component: () => import('./views/New.vue')
+      component: () => import("./views/New.vue")
     },
     {
-      path: '/stats',
-      name: 'stats',
+      path: "/edit",
+      name: "edit",
+      props: true,
 
-      component: () => import('./views/Stats.vue')
+      component: () => import("./views/Edit.vue")
     },
     {
-      path: '/timeline',
-      name: 'timeline',
+      path: "/stats",
+      name: "stats",
 
-      component: () => import('./views/Timeline.vue')
+      component: () => import("./views/Stats.vue")
+    },
+    {
+      path: "/timeline",
+      name: "timeline",
+
+      component: () => import("./views/Timeline.vue")
     }
   ]
-})
+});
